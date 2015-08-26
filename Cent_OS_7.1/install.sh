@@ -10,7 +10,7 @@ plugins_path="${workingpath}/plugins"
 #base setup
 function base_setup()
 {
-    rpm -Uvh http://ftp.riken.jp/Linux/fedora/epel/6/x86_64/epel-release-6-8.noarch.rpm
+    yum instal epel-release
     yum makecache
     yum install -y vim tmux htop wget
 }
@@ -49,11 +49,11 @@ function install_rrdtool(){
 yum install -y rrdtool
 
 #update rrdtool
-wget http://packages.express.org/rrdtool/rrdtool-1.4.7-1.el6.wrl.x86_64.rpm
-wget http://packages.express.org/rrdtool/rrdtool-devel-1.4.7-1.el6.wrl.x86_64.rpm
-wget http://packages.express.org/rrdtool/rrdtool-perl-1.4.7-1.el6.wrl.x86_64.rpm
-yum localinstall rrdtool-1.4.7-1.el6.wrl.x86_64.rpm rrdtool-devel-1.4.7-1.el6.wrl.x86_64.rpm rrdtool-perl-1.4.7-1.el6.wrl.x86_64.rpm
-
+#Update: rrdtool in CentOS 7 has been updated to 1.4.8 by default
+#wget http://packages.express.org/rrdtool/rrdtool-1.4.7-1.el6.wrl.x86_64.rpm
+#wget http://packages.express.org/rrdtool/rrdtool-devel-1.4.7-1.el6.wrl.x86_64.rpm
+#wget http://packages.express.org/rrdtool/rrdtool-perl-1.4.7-1.el6.wrl.x86_64.rpm
+#yum localinstall rrdtool-1.4.7-1.el6.wrl.x86_64.rpm rrdtool-devel-1.4.7-1.el6.wrl.x86_64.rpm #rrdtool-perl-1.4.7-1.el6.wrl.x86_64.rpm
 }
 #install cacti
 
@@ -189,7 +189,7 @@ name=cdnd
 tar xfpz $name.tgz -C ${cacti_home}/plugins
 
 name=intropage
-[ ! -f $name.tgz ] && wget -U 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36' 'http://forums.cacti.net/download/file.php?id=29498&sid=f873048221497fa62591429927732777' -O ${name}.tgz
+[ ! -f $name.tgz ] && wget -U 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36' 'http://forums.cacti.net/download/file.php?id=30520' -O ${name}.tgz
 [ -d ${cacti_home}/plugins/$name ] && rm -fr ${cacti_home}/plugins/$name
 tar xfpz $name.tgz -C ${cacti_home}/plugins
 cd ${cacti_home}/plugins/$name; patch -p1 < ${plugins_path}/$name.patch; cd ${plugins_path}
@@ -299,5 +299,4 @@ chown cacti:root ${cacti_home}/rra/archive
 
 }
 
-
-
+install_plugins
