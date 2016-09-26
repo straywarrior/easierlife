@@ -5,7 +5,7 @@
 // @description  Replace the background color of the websites
 // @author       StrayWarrior
 // @include      *
-// @grant        none
+// @grant        unsafeWindow
 // @require      https://cdn.bootcss.com/jquery/3.1.0/jquery.min.js
 // ==/UserScript==
 
