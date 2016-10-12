@@ -4,7 +4,7 @@
 // @version      0.1
 // @description  Remove ads from the pages of Tieba. May add other ads later.
 // @author       StrayWarrior
-// @include      tieba.baidu.com/*
+// @match        tieba.baidu.com/*
 // @grant        unsafeWindow
 // @require      https://cdn.bootcss.com/jquery/3.1.0/jquery.min.js
 // ==/UserScript==
