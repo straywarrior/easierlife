@@ -12,6 +12,12 @@
 (function() {
     'use strict';
 
+    var cleaner = function() {
+        $("html").css("overflow", "visible");
+        $("div.PrivacyConfirm-modal").each(function() {
+          this.parentNode.remove();
+        });
+    };
     var MAGIC_CODE = ['f', 'k'];
     var current = 0;
     document.addEventListener("keypress", function(e){
@@ -23,11 +29,9 @@
             current = 0;
         }
         if (current == MAGIC_CODE.length) {
-            $("html").css("overflow", "visible");
-            $("div.PrivacyConfirm-modal").each(function() {
-              this.parentNode.remove();
-            });
+            cleaner();
             console.log("You should have thrown away the disgusting inequality clauses!");
         }
     });
+    setTimeout(cleaner, 2000);
 })();
