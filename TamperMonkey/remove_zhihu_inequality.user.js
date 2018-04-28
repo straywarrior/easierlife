@@ -13,6 +13,8 @@
     'use strict';
 
     $("html").css("overflow", "visible");
-    $("div.PrivacyConfirm-modal").parentNode.remove();
+    $("div.PrivacyConfirm-modal").each(function() {
+        this.parentNode.remove();
+    });
 
 })();
