@@ -6,7 +6,21 @@
 
 install_brew() {
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+}
 
+install_git() {
+    if [ ! $(which git) ]; then
+        echo "Git is not installed. Install Git from brew"
+        brew install git
+    fi
+    git clone https://github.com/straywarrior/easierlife.git /tmp/easierlife
+    if [ -f ~/.gitconfig ]; then
+        mv -v ~/.gitconfig ~/.gitconfig.backup
+    fi
+    cp -v /tmp/easierlife/Git/.gitconfig ~/.gitconfig
+}
+
+configure_brew() {
     # Use faster mirror for formula
     cd "$(brew --repo)"
     git remote set-url origin https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git
@@ -38,6 +52,8 @@ EOF
 
 main() {
     install_brew
+    install_git
+    configure_brew
     install_fish
     configure_fish
 }
