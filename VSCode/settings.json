@@ -1,0 +1,29 @@
+{
+    "workbench.colorTheme": "Solarized Dark",
+    "editor.cursorBlinking": "solid",
+    "terminal.integrated.fontFamily": "Monaco for Powerline",
+    "window.zoomLevel": 0,
+    "vim.hlsearch": true,
+    "vim.leader": ";",
+    "vim.useSystemClipboard": true,
+    "vim.otherModesKeyBindingsNonRecursive": [
+        {
+            "before": ["leader", "w"],
+            "after": [],
+            "commands": [
+                {
+                    "command": "workbench.action.files.save",
+                    "args": []
+                }
+            ]
+        }
+    ],
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/*.o": true
+    }
+}
