@@ -7,6 +7,9 @@
 #
 
 OS_TYPE=
+LOCALPORT=
+REMOTEHOST=
+REMORTPORT=
 
 detect_os() {
     if [ -f /etc/redhat-release ]; then
@@ -33,8 +36,20 @@ install_haproxy() {
     install_haproxy_${OS_TYPE}
 }
 
-main() {
-    install_haproxy
+configure_haproxy() {
+    sed \
+        "s/LOCALPORT/${LOCALPORT}/;   \
+         s/REMOTEHOST/${REMOTEHOST}/; \
+         s/REMOTEPORT/${REMOTEPORT}/" \
+         haproxy.cfg.template > haproxy.cfg
 }
 
+main() {
+    install_haproxy
+    configure_haproxy
+}
+
+LOCALPORT=$1
+REMOTEHOST=$2
+REMOTEPORT=$3
 main
