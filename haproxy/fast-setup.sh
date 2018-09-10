@@ -32,21 +32,33 @@ install_haproxy_ubuntu() {
 }
 
 install_haproxy() {
+    echo "Install haproxy by package manager ..."
     detect_os
     install_haproxy_${OS_TYPE}
+    cp /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.dist
 }
 
 configure_haproxy() {
+    echo "Generate haproxy configuration ..."
     sed \
         "s/LOCALPORT/${LOCALPORT}/;   \
          s/REMOTEHOST/${REMOTEHOST}/; \
          s/REMOTEPORT/${REMOTEPORT}/" \
          haproxy.cfg.template > haproxy.cfg
+    cp haproxy.cfg /etc/haproxy/.
+}
+
+start_haproxy() {
+    echo "Try to restart haproxy ..."
+    killall haproxy || true
+    haproxy -D -f /etc/haproxy/haproxy.cfg
+    echo "Haproxy should have started to listen on $LOCALPORT"
 }
 
 main() {
     install_haproxy
     configure_haproxy
+    start_haproxy
 }
 
 LOCALPORT=$1
