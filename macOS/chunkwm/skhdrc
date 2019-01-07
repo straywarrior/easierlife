@@ -141,10 +141,10 @@ cmd + alt - n : chunkc tiling::desktop --create;\
 # destroy desktop
 cmd + alt - w : chunkc tiling::desktop --annihilate
 
-# fast focus desktop
-cmd + alt - x : chunkc tiling::desktop --focus $(chunkc get _last_active_desktop)
-cmd + alt - z : chunkc tiling::desktop --focus prev
-cmd + alt - c : chunkc tiling::desktop --focus next
+# fast focus desktop (conflicts with OneNote)
+# cmd + alt - x : chunkc tiling::desktop --focus $(chunkc get _last_active_desktop)
+# cmd + alt - z : chunkc tiling::desktop --focus prev
+# cmd + alt - c : chunkc tiling::desktop --focus next
 # cmd + alt - 1 : chunkc tiling::desktop --focus 1
 # cmd + alt - 2 : chunkc tiling::desktop --focus 2
 # cmd + alt - 3 : chunkc tiling::desktop --focus 3
@@ -185,8 +185,9 @@ ctrl + alt - 2  : chunkc tiling::monitor -f 2
 ctrl + alt - 3  : chunkc tiling::monitor -f 3
 
 # send window to monitor and follow focus
-#ctrl + cmd - z  : chunkc tiling::window --send-to-monitor prev; chunkc tiling::monitor -f prev
-ctrl + cmd - c  : chunkc tiling::window --send-to-monitor next; chunkc tiling::monitor -f next
+# ctrl + cmd - z conflicts with Dash
+# ctrl + cmd - z  : chunkc tiling::window --send-to-monitor prev; chunkc tiling::monitor -f prev
+# ctrl + cmd - c  : chunkc tiling::window --send-to-monitor next; chunkc tiling::monitor -f next
 ctrl + cmd - 1  : chunkc tiling::window --send-to-monitor 1; chunkc tiling::monitor -f 1
 ctrl + cmd - 2  : chunkc tiling::window --send-to-monitor 2; chunkc tiling::monitor -f 2
 ctrl + cmd - 3  : chunkc tiling::window --send-to-monitor 3; chunkc tiling::monitor -f 3
