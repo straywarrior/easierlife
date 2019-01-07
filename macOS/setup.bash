@@ -46,7 +46,7 @@ install_fish() {
 configure_fish() {
     cat >> ~/.config/fish/config.fish <<-EOF 
 [ -f /usr/local/share/autojump/autojump.fish ]; and source /usr/local/share/autojump/autojump.fish
-set HOMEBREW_BOTTLE_DOMAIN https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles
+set -x HOMEBREW_BOTTLE_DOMAIN https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles
 set VIRTUAL_ENV_DISABLE_PROMPT false
 EOF
 }
