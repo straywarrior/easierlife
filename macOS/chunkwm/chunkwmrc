@@ -140,4 +140,5 @@ chunkc tiling::rule --owner Finder --name Copy --state float &
 chunkc tiling::rule --owner \"App Store\" --state float &
 chunkc tiling::rule --owner Emacs --except "^$" --state tile &
 chunkc tiling::rule --owner YoudaoDict --name Window --state float &
+chunkc tiling::rule --owner ".*IDEA" --name Warning --state float &
 chunkc tiling::rule --owner "GIMP.*" --state float &
