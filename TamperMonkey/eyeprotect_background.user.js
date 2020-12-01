@@ -14,7 +14,7 @@
 
     const BACKGROUND_COLOR = "#fdf6e3";
     // 特殊的标签和类别需要跳过
-    var skipNodes = ['SCRIPT', 'BR', 'CANVAS', 'IMG', 'svg'];
+    var skipNodes = ['SCRIPT', 'BR', 'CANVAS', 'IMG', 'svg', "INPUT"];
     Element.prototype.shouldBeIgnored = function () {
         if (skipNodes.indexOf(this.nodeName) > -1) {
             return true;
@@ -99,10 +99,31 @@
         childList: true,
         subtree: true
     };
+    var isEyeProtectorEnabled = false;
+    var enableEyeProtector = function() {
+        $("body").css("background-color", BACKGROUND_COLOR);
+        Array.from(document.body.children).forEach((node) => {
+            node.replaceColor();
+        });
+        observer.observe(document.body, observerConfig);
+        console.log("EyeProtector enabled.");
+    }
 
-    $("body").css("background-color", BACKGROUND_COLOR);
-    Array.from(document.body.children).forEach((node) => {
-        node.replaceColor();
+    var MAGIC_CODE = ['R', 'C'];
+    var current = 0;
+    document.addEventListener("keypress", function(e){
+        if (isEyeProtectorEnabled) {
+            return;
+        }
+        var code = e.keyCode || e.which;
+        var ch = String.fromCharCode(code);
+        if (ch == MAGIC_CODE[current]) {
+            current++;
+        } else {
+            current = 0;
+        }
+        if (current == MAGIC_CODE.length) {
+            enableEyeProtector();
+        }
     });
-    observer.observe(document.body, observerConfig);
 })();
