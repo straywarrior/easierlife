@@ -14,7 +14,7 @@
 
     const BACKGROUND_COLOR = "#fdf6e3";
     // 特殊的标签和类别需要跳过
-    var skipNodes = ['SCRIPT', 'BR', 'CANVAS', 'IMG', 'svg'];
+    var skipNodes = ['SCRIPT', 'BR', 'CANVAS', 'IMG', 'svg', "INPUT"];
     Element.prototype.shouldBeIgnored = function () {
         if (skipNodes.indexOf(this.nodeName) > -1) {
             return true;
