@@ -5,7 +5,6 @@
 // @description  Remove useless modules from KM pages
 // @author       StrayWarrior
 // @grant        unsafeWindow
-// @run-at       document-idle
 // @match        *://km.sankuai.com/*
 // ==/UserScript==
 
