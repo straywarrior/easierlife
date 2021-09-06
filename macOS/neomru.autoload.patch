@@ -1,0 +1,13 @@
+diff --git a/autoload/neomru.vim b/autoload/neomru.vim
+index 25d55d1..8e8aed1 100644
+--- a/autoload/neomru.vim
++++ b/autoload/neomru.vim
+@@ -247,7 +247,7 @@ function! s:mru.append(path)  "{{{
+   endif
+ endfunction"}}}
+ function! s:mru.version_check(ver)  "{{{
+-  if str2float(a:ver) < self.version
++  if str2float(a:ver) < str2float(self.version)
+     call s:print_error('Sorry, the version of MRU file is too old.')
+     return 0
+   else
