@@ -27,12 +27,24 @@ configure_git() {
 
 
 configure_brew() {
+    __BREW_MIRROR_ROOT="https://mirrors.tuna.tsinghua.edu.cn/git/homebrew"
     # Use faster mirror for formula
     cd "$(brew --repo)"
-    git remote set-url origin https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git
-    cd "$(brew --repo)/Library/Taps/homebrew/homebrew-core"
-    git remote set-url origin https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git
-    brew update
+    git remote set-url origin $__BREW_MIRROR_ROOT/brew.git
+
+    # User faster mirror for other tap
+    BREW_TAPS="$(brew tap)"
+    for tap in core cask{,-fonts,-drivers,-versions} command-not-found; do
+        if echo "$BREW_TAPS" | grep -qE "^homebrew/${tap}\$"; then
+            # 将已有 tap 的上游设置为本镜像并设置 auto update
+            # 注：原 auto update 只针对托管在 GitHub 上的上游有效
+            git -C "$(brew --repo homebrew/${tap})" remote set-url origin $__BREW_MIRROR_ROOT/homebrew-${tap}.git
+            git -C "$(brew --repo homebrew/${tap})" config homebrew.forceautoupdate true
+        else
+            echo "brew tap $tap can not be found."
+            # brew tap --force-auto-update homebrew/${tap} $__BREW_MIRROR_ROOT/homebrew-${tap}.git
+        fi
+    done
 
     # Use faster mirror for bottle
     echo 'export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles' >> ~/.bash_profile
@@ -79,6 +91,10 @@ configure_vim() {
     cd $__WORKDIR
 }
 
+install_others_from_brew() {
+    brew install the_silver_searcher
+}
+
 main() {
     install_brew
     install_git
@@ -87,6 +103,7 @@ main() {
     install_fish
     configure_fish
     configure_vim
+    install_others_from_brew
 }
 
 main
