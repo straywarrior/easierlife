@@ -1,0 +1,13 @@
+diff --git a/functions/fish_prompt.fish b/functions/fish_prompt.fish
+index c73e887..d95bc17 100644
+--- a/functions/fish_prompt.fish
++++ b/functions/fish_prompt.fish
+@@ -182,7 +182,7 @@ end
+ function get_hostname -d "Set current hostname to prompt variable $HOSTNAME_PROMPT if connected via SSH"
+   set -g HOSTNAME_PROMPT ""
+   if [ "$theme_hide_hostname" = "no" -o \( "$theme_hide_hostname" != "yes" -a -n "$SSH_CLIENT" \) ]
+-    set -g HOSTNAME_PROMPT (uname -n)
++    set -g HOSTNAME_PROMPT (hostname)
+   end
+ end
+ 
