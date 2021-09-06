@@ -95,6 +95,12 @@ install_others_from_brew() {
     brew install the_silver_searcher
 }
 
+setup_ssh_client() {
+    mkdir ~/.ssh
+    chmod 700 ~/.ssh
+    ssh-keygen -t rsa -C i@straywarrior.com
+}
+
 main() {
     install_brew
     install_git
@@ -104,6 +110,7 @@ main() {
     configure_fish
     configure_vim
     install_others_from_brew
+    setup_ssh_client
 }
 
 main
