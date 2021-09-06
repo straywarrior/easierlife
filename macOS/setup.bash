@@ -4,6 +4,8 @@
 # Copyright (C) 2018 StrayWarrior <i@straywarrior.com>
 #
 
+__WORKDIR=$PWD
+
 install_brew() {
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 }
@@ -45,6 +47,12 @@ install_fish() {
 
     # Install autojump
     brew install autojump
+
+    # Patch agnoster
+    cd $HOME/.local/share/omf/themes/agnoster
+    git apply $__WORKDIR/fish.agnoster.patch
+    echo "omf agnoster patched."
+    cd $__WORKDIR
 }
 
 configure_fish() {
@@ -60,7 +68,6 @@ EOF
 }
 
 configure_vim() {
-    __WORKDIR=$PWD
     cd $HOME
     git clone https://github.com/straywarrior/vimfiles.git .vim
     cd .vim
