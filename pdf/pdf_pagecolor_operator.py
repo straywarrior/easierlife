@@ -29,7 +29,7 @@ def main():
     for i in range(input_reader.getNumPages()):
         input_page = input_reader.getPage(i)
         media_box = input_page.mediaBox
-        w, h = media_box.getWidth(), media_box.getHeight()
+        w, h = float(media_box.getWidth()), float(media_box.getHeight())
         page = output_writer.addBlankPage(w, h)
         tpl_page.scaleTo(w, h)
         page.mergePage(tpl_page)
