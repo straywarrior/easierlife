@@ -1,0 +1,5 @@
+#! /bin/sh -x
+
+export ALL_PROXY="socks5://127.0.0.1:1086"
+echo "Try to use curl via proxy $ALL_PROXY"
+curl "$@"
