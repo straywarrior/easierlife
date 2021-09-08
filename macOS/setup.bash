@@ -72,6 +72,7 @@ configure_fish() {
 [ -f /usr/local/share/autojump/autojump.fish ]; and source /usr/local/share/autojump/autojump.fish
 set -x HOMEBREW_BOTTLE_DOMAIN https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles
 set VIRTUAL_ENV_DISABLE_PROMPT false
+set -x LC_ALL="en_US.UTF-8"
 EOF
 
     echo "Try to add fish shell as standard shell. Root privilege is required."
@@ -93,6 +94,7 @@ configure_vim() {
 
 install_others_from_brew() {
     brew install the_silver_searcher
+    brew install wget
 }
 
 setup_ssh_client() {
