@@ -49,6 +49,32 @@
     after_setup();
   }
 
+  var answer_clean_function = function() {
+    document.getElementsByClassName("Question-sideColumn Question-sideColumn--sticky").forEach(self_remove);
+    document.getElementsByClassName("ModelWrap").forEach(self_remove);
+    document.getElementsByClassName("SkipModel").forEach(self_remove);
+    document.getElementsByClassName("Card MoreAnswers").forEach(self_remove);
+    document.getElementsByClassName("Card ViewAll").forEach(self_remove);
+    document.getElementById("clean-button").remove();
+  }
+
+  var answer_setup_function = function() {
+    if (document.getElementsByClassName("QuestionButtonGroup").length == 0) {
+      return;
+    }
+
+    var cleanButton = document.createElement("button");
+    var header = document.getElementsByClassName("QuestionButtonGroup")[0];
+    header.insertAdjacentElement("afterbegin", cleanButton);
+    cleanButton.id = "clean-button";
+    cleanButton.setAttribute("class", "Button Button--blue");
+    cleanButton.style.setProperty("margin-right", "16px");
+    cleanButton.innerText = "cleanup";
+    cleanButton.addEventListener("click", answer_clean_function);
+
+    after_setup();
+  }
+
   setInterval(function() {
     if (document.getElementById(MARK_ID) != null) {
       return;
@@ -56,6 +82,9 @@
     var hostname = location.hostname;
     if (hostname.includes("zhuanlan.zhihu.com")) {
       zhuanlan_setup_function();
+    }
+    if (hostname.includes("zhihu.com") && location.href.includes("answer")) {
+      answer_setup_function();
     }
   }, 2000);
 })();
