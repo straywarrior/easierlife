@@ -51,20 +51,23 @@
 
   var answer_clean_function = function() {
     document.getElementsByClassName("Question-sideColumn Question-sideColumn--sticky").forEach(self_remove);
-    document.getElementsByClassName("ModelWrap").forEach(self_remove);
-    document.getElementsByClassName("SkipModel").forEach(self_remove);
+    document.getElementsByClassName("ModalWrap").forEach(self_remove);
+    document.getElementsByClassName("SkipModal").forEach(self_remove);
     document.getElementsByClassName("Card MoreAnswers").forEach(self_remove);
     document.getElementsByClassName("Card ViewAll").forEach(self_remove);
+    document.getElementsByClassName("CornerButtons").forEach(self_remove);
+    document.getElementsByClassName("ContentItem-actions RichContent-actions").forEach(self_remove);
+    document.getElementsByClassName("Question-mainColumn")[0].style["width"] = "revert";
     document.getElementById("clean-button").remove();
   }
 
   var answer_setup_function = function() {
-    if (document.getElementsByClassName("QuestionButtonGroup").length == 0) {
+    if (document.getElementsByClassName("QuestionHeaderActions").length == 0) {
       return;
     }
 
     var cleanButton = document.createElement("button");
-    var header = document.getElementsByClassName("QuestionButtonGroup")[0];
+    var header = document.getElementsByClassName("QuestionHeaderActions")[0];
     header.insertAdjacentElement("afterbegin", cleanButton);
     cleanButton.id = "clean-button";
     cleanButton.setAttribute("class", "Button Button--blue");
