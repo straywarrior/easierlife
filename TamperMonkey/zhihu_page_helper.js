@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Zhihu Page Helper
 // @namespace    strayscript
-// @version      0.3.1
+// @version      0.4.0
 // @description  Make Zhihu easier to use for me.
 // @author       StrayWarrior
 // @match        http*://*.zhihu.com/*
@@ -26,9 +26,13 @@
     }
   }
 
+  var removeElementsByClassName = function(name) {
+    document.getElementsByClassName(name).forEach(self_remove);
+  }
+
   var zhuanlan_clean_function = function() {
-    document.getElementsByClassName("RichContent-actions").forEach(self_remove);
-    document.getElementsByClassName("CornerButtons").forEach(self_remove);
+    removeElementsByClassName("RichContent-actions");
+    removeElementsByClassName("CornerButtons");
     document.getElementById("clean-button").remove();
   }
 
@@ -50,13 +54,13 @@
   }
 
   var answer_clean_function = function() {
-    document.getElementsByClassName("Question-sideColumn Question-sideColumn--sticky").forEach(self_remove);
-    document.getElementsByClassName("ModalWrap").forEach(self_remove);
-    document.getElementsByClassName("SkipModal").forEach(self_remove);
-    document.getElementsByClassName("Card MoreAnswers").forEach(self_remove);
-    document.getElementsByClassName("Card ViewAll").forEach(self_remove);
-    document.getElementsByClassName("CornerButtons").forEach(self_remove);
-    document.getElementsByClassName("ContentItem-actions RichContent-actions").forEach(self_remove);
+    removeElementsByClassName("Question-sideColumn Question-sideColumn--sticky");
+    removeElementsByClassName("ModalWrap");
+    removeElementsByClassName("SkipModal");
+    removeElementsByClassName("Card MoreAnswers");
+    removeElementsByClassName("Card ViewAll");
+    removeElementsByClassName("CornerButtons");
+    removeElementsByClassName("ContentItem-actions RichContent-actions");
     document.getElementsByClassName("Question-mainColumn")[0].style["width"] = "revert";
     document.getElementById("clean-button").remove();
   }
