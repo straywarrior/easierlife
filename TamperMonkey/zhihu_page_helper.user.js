@@ -54,30 +54,32 @@
   }
 
   var answer_clean_function = function() {
+    removeElementsByClassName("Sticky AppHeader");
     removeElementsByClassName("Question-sideColumn Question-sideColumn--sticky");
-    removeElementsByClassName("ModalWrap");
-    removeElementsByClassName("SkipModal");
-    removeElementsByClassName("Card MoreAnswers");
-    removeElementsByClassName("Card ViewAll");
+    // removeElementsByClassName("Card MoreAnswers");
+    // removeElementsByClassName("Card ViewAll");
     removeElementsByClassName("CornerButtons");
     removeElementsByClassName("ContentItem-actions RichContent-actions");
-    document.getElementsByClassName("Question-mainColumn")[0].style["width"] = "revert";
+    document.querySelector(".Question-mainColumn").style["width"] = "revert";
     document.getElementById("clean-button").remove();
   }
 
   var answer_setup_function = function() {
-    if (document.getElementsByClassName("QuestionHeaderActions").length == 0) {
+    var pageHeader = document.querySelector(".PageHeader");
+    if (!pageHeader) {
       return;
     }
 
     var cleanButton = document.createElement("button");
-    var header = document.getElementsByClassName("QuestionHeaderActions")[0];
-    header.insertAdjacentElement("afterbegin", cleanButton);
+    var buttonGroup = pageHeader.querySelector(".QuestionButtonGroup")
+    buttonGroup.insertAdjacentElement("afterbegin", cleanButton);
     cleanButton.id = "clean-button";
     cleanButton.setAttribute("class", "Button Button--blue");
-    cleanButton.style.setProperty("margin-right", "16px");
-    cleanButton.innerText = "cleanup";
+    cleanButton.innerText = "清理";
     cleanButton.addEventListener("click", answer_clean_function);
+    // set other div styles
+    pageHeader.querySelector(".QuestionHeader-main").style["width"] = "revert";
+    pageHeader.querySelector(".QuestionHeader-side").style["max-width"] = "revert";
 
     after_setup();
   }
