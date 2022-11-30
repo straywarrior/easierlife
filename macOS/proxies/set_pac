@@ -1,0 +1,22 @@
+#! /bin/sh
+#
+# set_pac
+# Copyright (C) 2022 StrayWarrior <i@straywarrior.com>
+
+PAC_URL=${PAC_URL:-}
+NET_SERVICE=${NET_SERVICE:-Wi-Fi}
+
+
+case $1 in
+    on)
+        networksetup -setautoproxyurl "$NET_SERVICE" "$PAC_URL"
+        echo "PAC URL set to: $PAC_URL"
+        ;;
+    off)
+        networksetup -setautoproxystate "$NET_SERVICE" off
+        echo "PAC is turned off"
+        ;;
+    *)
+        echo "nothing to do"
+        ;;
+esac
