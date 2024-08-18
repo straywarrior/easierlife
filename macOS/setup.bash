@@ -7,7 +7,7 @@
 __WORKDIR=$PWD
 
 install_brew() {
-    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    bash -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 }
 
 install_git() {
@@ -27,27 +27,13 @@ configure_git() {
 
 
 configure_brew() {
-    __BREW_MIRROR_ROOT="https://mirrors.tuna.tsinghua.edu.cn/git/homebrew"
-    # Use faster mirror for formula
-    cd "$(brew --repo)"
-    git remote set-url origin $__BREW_MIRROR_ROOT/brew.git
-
-    # User faster mirror for other tap
-    BREW_TAPS="$(brew tap)"
-    for tap in core cask{,-fonts,-drivers,-versions} command-not-found; do
-        if echo "$BREW_TAPS" | grep -qE "^homebrew/${tap}\$"; then
-            # 将已有 tap 的上游设置为本镜像并设置 auto update
-            # 注：原 auto update 只针对托管在 GitHub 上的上游有效
-            git -C "$(brew --repo homebrew/${tap})" remote set-url origin $__BREW_MIRROR_ROOT/homebrew-${tap}.git
-            git -C "$(brew --repo homebrew/${tap})" config homebrew.forceautoupdate true
-        else
-            echo "brew tap $tap can not be found."
-            # brew tap --force-auto-update homebrew/${tap} $__BREW_MIRROR_ROOT/homebrew-${tap}.git
-        fi
+    export HOMEBREW_API_DOMAIN="https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api"
+    export HOMEBREW_BREW_GIT_REMOTE="https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git"
+    export HOMEBREW_CORE_GIT_REMOTE="https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git"
+    for tap in command-not-found services; do
+        brew tap --custom-remote --force-auto-update "homebrew/${tap}" "https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-${tap}.git"
     done
-
-    # Use faster mirror for bottle
-    echo 'export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles' >> ~/.bash_profile
+    brew update
 }
 
 install_fish() {
@@ -68,16 +54,23 @@ install_fish() {
 }
 
 configure_fish() {
-    cat >> ~/.config/fish/config.fish <<-EOF 
-[ -f /usr/local/share/autojump/autojump.fish ]; and source /usr/local/share/autojump/autojump.fish
+    cat >> ~/.config/fish/config.fish <<-EOF
+[ -f /opt/homebrew/share/autojump/autojump.fish ]; and source /opt/homebrew/share/autojump/autojump.fish
+set -x HOMEBREW_API_DOMAIN https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api
 set -x HOMEBREW_BOTTLE_DOMAIN https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles
+set -x HOMEBREW_BREW_GIT_REMOTE https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git
+set -x HOMEBREW_CORE_GIT_REMOTE https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git
 set VIRTUAL_ENV_DISABLE_PROMPT false
 set -x LC_ALL="en_US.UTF-8"
 EOF
 
     echo "Try to add fish shell as standard shell. Root privilege is required."
-    sudo bash -c "grep /usr/local/bin/fish /etc/shells || echo /usr/local/bin/fish >> /etc/shells"
-    chsh -s /usr/local/bin/fish
+    __FISH_PATH="/opt/homebrew/bin/fish"
+    if [ ! -f $__FISH_PATH ]; then
+        echo "Fish shell does not exist. Expected path: $__FISH_PATH"
+    fi
+    sudo bash -c "grep $__FISH_PATH /etc/shells || echo $__FISH_PATH >> /etc/shells"
+    chsh -s $__FISH_PATH
 }
 
 configure_vim() {
@@ -98,7 +91,7 @@ install_others_from_brew() {
 }
 
 setup_ssh_client() {
-    mkdir ~/.ssh
+    mkdir -p ~/.ssh
     chmod 700 ~/.ssh
     ssh-keygen -t rsa -C i@straywarrior.com
 }
