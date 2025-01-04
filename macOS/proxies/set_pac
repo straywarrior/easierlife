@@ -3,7 +3,9 @@
 # set_pac
 # Copyright (C) 2022 StrayWarrior <i@straywarrior.com>
 
-PAC_URL=${PAC_URL:-}
+PAC_URL=${PAC_URL:-http://192.168.31.201:1079/home.pac}
+SOCKS_SERVER=192.168.31.201
+SOCKS_PORT=1084
 NET_SERVICE=${NET_SERVICE:-Wi-Fi}
 
 
@@ -15,6 +17,14 @@ case $1 in
     off)
         networksetup -setautoproxystate "$NET_SERVICE" off
         echo "PAC is turned off"
+        ;;
+    socks-on)
+        networksetup -setsocksfirewallproxy "$NET_SERVICE" "$SOCKS_SERVER" "$SOCKS_PORT"
+        echo "SOCKS5 proxy set to $SOCKS_SERVER:$SOCKS_PORT"
+        ;;
+    socks-off)
+        networksetup -setsocksfirewallproxystate "$NET_SERVICE" off
+        echo "SOCKS5 proxy is turned off"
         ;;
     *)
         echo "nothing to do"
